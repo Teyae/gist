@@ -34,11 +34,38 @@
 	<!-- INCLUDE SETTINGS HERE -->
 	
 	<div class="potree_container" style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px; ">
-		<div id="potree_render_area" style="background-image: url('../build/potree/resources/images/background.jpg');"></div>
+		<div id="potree_render_area" style="background-image: url('../build/potree/resources/images/background.jpg');">
+			<div id="cesiumContainer" style="position: absolute; width: 100%; height: 100%; background-color:green"></div>
+		</div>
 		<div id="potree_sidebar_container"> </div>
 	</div>
 	
 	<script>
+        window.cesiumViewer = new Cesium.Viewer('cesiumContainer', {
+		useDefaultRenderLoop: false,
+		animation: false,
+		baseLayerPicker : false,
+		fullscreenButton: false, 
+		geocoder: false,
+		homeButton: false,
+		infoBox: false,
+		sceneModePicker: false,
+		selectionIndicator: false,
+		timeline: false,
+		navigationHelpButton: false,
+		imageryProvider : Cesium.createOpenStreetMapImageryProvider({url : 'https://a.tile.openstreetmap.org/'}),
+		terrainShadows: Cesium.ShadowMode.DISABLED,
+	});
+
+	let cp = new Cesium.Cartesian3(4303414.154026048, 552161.235598733, 4660771.704035539);
+	cesiumViewer.camera.setView({
+		destination : cp,
+		orientation: {
+			heading : 10, 
+			pitch : -Cesium.Math.PI_OVER_TWO * 0.5, 
+			roll : 0.0 
+		}
+	});
 	
 		window.viewer = new Potree.Viewer(document.getElementById("potree_render_area"));
 		
